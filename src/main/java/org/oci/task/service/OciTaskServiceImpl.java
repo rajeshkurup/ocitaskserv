@@ -44,7 +44,7 @@ public class OciTaskServiceImpl implements OciTaskService {
         List<OciTask> tasks = (List<OciTask>)taskDao.findAll();
         OciTask task = new OciTask();
         task.setId(1234L);
-        task.setTitle("Hello World! I'm a Task from OCI Task System!!");
+        task.setTitle("Hello World! I'm a Task from OCI Task System!! This is a test version!!!");
         tasks.add(task);
         OciTaskServResponse resp = new OciTaskServResponse();
         resp.setTasks(tasks);
