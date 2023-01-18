@@ -1,5 +1,7 @@
 package org.oci.task.data.api;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -9,8 +11,10 @@ import java.util.Date;
 public class OciTaskServRequest {
 
     /**
-     * @brief Title of the Task (Maximum 1kb).
+     * @brief Title of the Task (Maximum 1kb). Should be a valid text.
      */
+    @NotNull
+    @NotBlank
     private String title;
 
     /**
@@ -24,7 +28,7 @@ public class OciTaskServRequest {
     private int priority;
 
     /**
-     * @brief Status of the Task. True means the Task is Completed otherwise Open.
+     * @brief Status of the Task. True means the Task is Completed otherwise Open. It would be False by default.
      */
     private boolean completed;
 
