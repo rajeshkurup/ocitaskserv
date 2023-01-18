@@ -1,4 +1,4 @@
-package org.oci.task.data;
+package org.oci.task.data.api;
 
 import org.oci.task.data.model.OciTask;
 import org.oci.task.error.OciError;

@@ -1,6 +1,7 @@
 package org.oci.task.api;
 
-import org.oci.task.data.OciTaskServResponse;
+import org.oci.task.data.api.OciTaskServRequest;
+import org.oci.task.data.api.OciTaskServResponse;
 import org.oci.task.data.model.OciTask;
 import org.oci.task.error.OciError;
 import org.oci.task.error.OciErrorCode;
@@ -67,12 +68,12 @@ public class OciTaskApi {
     }
 
     @PostMapping(value = "/tasks", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OciTaskServResponse> createTask(@RequestBody OciTask task) {
+    public ResponseEntity<OciTaskServResponse> createTask(@RequestBody OciTaskServRequest ociTaskReq) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         OciTaskServResponse resp = null;
 
         try {
-            resp = taskService.saveTask(0L, task);
+            resp = taskService.saveTask(0L, ociTaskReq);
             httpStatus = getHttpStatus(resp.getError());
         }
         catch(Exception ex) {
@@ -86,12 +87,12 @@ public class OciTaskApi {
     }
 
     @PutMapping(value = "/tasks/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OciTaskServResponse> updateTask(@PathVariable long id, @RequestBody OciTask task) {
+    public ResponseEntity<OciTaskServResponse> updateTask(@PathVariable long id, @RequestBody OciTaskServRequest ociTaskReq) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         OciTaskServResponse resp = null;
 
         try {
-            resp = taskService.saveTask(id, task);
+            resp = taskService.saveTask(id, ociTaskReq);
             httpStatus = getHttpStatus(resp.getError());
         }
         catch(Exception ex) {

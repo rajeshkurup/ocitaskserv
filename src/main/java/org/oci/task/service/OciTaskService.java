@@ -1,7 +1,8 @@
 package org.oci.task.service;
 
+import org.oci.task.data.api.OciTaskServRequest;
 import org.oci.task.data.model.OciTask;
-import org.oci.task.data.OciTaskServResponse;
+import org.oci.task.data.api.OciTaskServResponse;
 import org.oci.task.error.OciError;
 import org.springframework.stereotype.Component;
 
@@ -14,11 +15,11 @@ public interface OciTaskService {
 
     /**
      * @brief Create new Task or update existing Task in OCI Task System.
-     * @param taskId Identifier of Task record in OCI Task System. Must be valid to update existing Task.
-     * @param task Details of Task {@link OciTask} to be created or updated. Id must not be present in order to create new Task.
+     * @param taskId Identifier of Task record in OCI Task System. Must be valid to update existing Task. Pass zero to create new Task.
+     * @param ociTaskReq Details of Task {@link OciTask} to be created or updated.
      * @return Identifier of the Task if succeeded, instance of {@link OciError} otherwise.
      */
-    OciTaskServResponse saveTask(long taskId, OciTask task);
+    OciTaskServResponse saveTask(long taskId, OciTaskServRequest ociTaskReq);
 
     /**
      * @brief Delete a Task from OCI Task System.

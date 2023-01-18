@@ -7,11 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oci.task.data.OciTaskServResponse;
+import org.oci.task.data.api.OciTaskServRequest;
+import org.oci.task.data.api.OciTaskServResponse;
 import org.oci.task.data.dao.OciTaskDao;
 import org.oci.task.data.model.OciTask;
 import org.oci.task.error.OciErrorCode;
-import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +143,7 @@ public class OciTaskServiceImplTest {
 
         Mockito.when(ociTaskDaoMock.save(Mockito.any(OciTask.class))).thenReturn(task);
 
-        OciTaskServResponse result = ociTaskServiceImpl.saveTask(0L, new OciTask());
+        OciTaskServResponse result = ociTaskServiceImpl.saveTask(0L, new OciTaskServRequest());
 
         Assertions.assertNull(result.getTask());
         Assertions.assertEquals(1001L, result.getTaskId());
@@ -160,7 +160,7 @@ public class OciTaskServiceImplTest {
 
         Mockito.when(ociTaskDaoMock.save(Mockito.any(OciTask.class))).thenReturn(task);
 
-        OciTaskServResponse result = ociTaskServiceImpl.saveTask(1001L, new OciTask());
+        OciTaskServResponse result = ociTaskServiceImpl.saveTask(1001L, new OciTaskServRequest());
 
         Assertions.assertNull(result.getTask());
         Assertions.assertEquals(1001L, result.getTaskId());
@@ -185,7 +185,7 @@ public class OciTaskServiceImplTest {
     public void testSaveTaskFailedInvalidArgument() {
         Mockito.when(ociTaskDaoMock.save(Mockito.any(OciTask.class))).thenThrow(new IllegalArgumentException("Invalid Argument"));
 
-        OciTaskServResponse result = ociTaskServiceImpl.saveTask(1001L, new OciTask());
+        OciTaskServResponse result = ociTaskServiceImpl.saveTask(1001L, new OciTaskServRequest());
 
         Assertions.assertNull(result.getTask());
         Assertions.assertEquals(0L, result.getTaskId());

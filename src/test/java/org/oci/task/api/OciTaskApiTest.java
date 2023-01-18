@@ -7,7 +7,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oci.task.data.OciTaskServResponse;
+import org.oci.task.data.api.OciTaskServRequest;
+import org.oci.task.data.api.OciTaskServResponse;
 import org.oci.task.data.model.OciTask;
 import org.oci.task.error.OciError;
 import org.oci.task.error.OciErrorCode;
@@ -159,56 +160,44 @@ public class OciTaskApiTest {
 
     @Test
     public void testUpdateTaskSuccess() {
-        OciTask task = new OciTask();
-        task.setId(1001L);
-        task.setTitle("My test Task");
-
         OciTaskServResponse resp = new OciTaskServResponse();
         resp.setTaskId(1001L);
 
-        Mockito.when(taskServiceMock.saveTask(Mockito.eq(1001L), Mockito.any(OciTask.class))).thenReturn(resp);
+        Mockito.when(taskServiceMock.saveTask(Mockito.eq(1001L), Mockito.any(OciTaskServRequest.class))).thenReturn(resp);
 
-        ResponseEntity<OciTaskServResponse> result = ociTaskApi.updateTask(1001L, task);
+        ResponseEntity<OciTaskServResponse> result = ociTaskApi.updateTask(1001L, new OciTaskServRequest());
 
         Assertions.assertNull(result.getBody().getError());
         Assertions.assertEquals(1001L, result.getBody().getTaskId());
 
-        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(1001L), Mockito.any(OciTask.class));
+        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(1001L), Mockito.any(OciTaskServRequest.class));
     }
 
     @Test
     public void testUpdateTaskFailed() {
-        OciTask task = new OciTask();
-        task.setId(1001L);
-        task.setTitle("My test Task");
-
         OciTaskServResponse resp = new OciTaskServResponse();
         resp.setError(new OciError(OciErrorCode.INVALID_ARGUMENT, "Invalid Argument"));
 
-        Mockito.when(taskServiceMock.saveTask(Mockito.eq(1001L), Mockito.any(OciTask.class))).thenReturn(resp);
+        Mockito.when(taskServiceMock.saveTask(Mockito.eq(1001L), Mockito.any(OciTaskServRequest.class))).thenReturn(resp);
 
-        ResponseEntity<OciTaskServResponse> result = ociTaskApi.updateTask(1001L, task);
+        ResponseEntity<OciTaskServResponse> result = ociTaskApi.updateTask(1001L, new OciTaskServRequest());
 
         Assertions.assertNotNull(result.getBody().getError());
         Assertions.assertEquals(OciErrorCode.INVALID_ARGUMENT, result.getBody().getError().getErrorCode());
 
-        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(1001L), Mockito.any(OciTask.class));
+        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(1001L), Mockito.any(OciTaskServRequest.class));
     }
 
     @Test
     public void testUpdateTaskException() {
-        OciTask task = new OciTask();
-        task.setId(1001L);
-        task.setTitle("My test Task");
+        Mockito.when(taskServiceMock.saveTask(Mockito.eq(1001L), Mockito.any(OciTaskServRequest.class))).thenThrow(new IllegalArgumentException("Invalid Argument"));
 
-        Mockito.when(taskServiceMock.saveTask(Mockito.eq(1001L), Mockito.any(OciTask.class))).thenThrow(new IllegalArgumentException("Invalid Argument"));
-
-        ResponseEntity<OciTaskServResponse> result = ociTaskApi.updateTask(1001L, task);
+        ResponseEntity<OciTaskServResponse> result = ociTaskApi.updateTask(1001L, new OciTaskServRequest());
 
         Assertions.assertNotNull(result.getBody().getError());
         Assertions.assertEquals(OciErrorCode.INTERNAL_ERROR, result.getBody().getError().getErrorCode());
 
-        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(1001L), Mockito.any(OciTask.class));
+        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(1001L), Mockito.any(OciTaskServRequest.class));
     }
 
     @Test
@@ -216,14 +205,14 @@ public class OciTaskApiTest {
         OciTaskServResponse resp = new OciTaskServResponse();
         resp.setTaskId(1001L);
 
-        Mockito.when(taskServiceMock.saveTask(Mockito.eq(0L), Mockito.any(OciTask.class))).thenReturn(resp);
+        Mockito.when(taskServiceMock.saveTask(Mockito.eq(0L), Mockito.any(OciTaskServRequest.class))).thenReturn(resp);
 
-        ResponseEntity<OciTaskServResponse> result = ociTaskApi.createTask(new OciTask());
+        ResponseEntity<OciTaskServResponse> result = ociTaskApi.createTask(new OciTaskServRequest());
 
         Assertions.assertNull(result.getBody().getError());
         Assertions.assertEquals(1001L, result.getBody().getTaskId());
 
-        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(0L), Mockito.any(OciTask.class));
+        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(0L), Mockito.any(OciTaskServRequest.class));
     }
 
     @Test
@@ -231,26 +220,26 @@ public class OciTaskApiTest {
         OciTaskServResponse resp = new OciTaskServResponse();
         resp.setError(new OciError(OciErrorCode.INVALID_ARGUMENT, "Invalid Argument"));
 
-        Mockito.when(taskServiceMock.saveTask(Mockito.eq(0L), Mockito.any(OciTask.class))).thenReturn(resp);
+        Mockito.when(taskServiceMock.saveTask(Mockito.eq(0L), Mockito.any(OciTaskServRequest.class))).thenReturn(resp);
 
-        ResponseEntity<OciTaskServResponse> result = ociTaskApi.createTask(new OciTask());
+        ResponseEntity<OciTaskServResponse> result = ociTaskApi.createTask(new OciTaskServRequest());
 
         Assertions.assertNotNull(result.getBody().getError());
         Assertions.assertEquals(OciErrorCode.INVALID_ARGUMENT, result.getBody().getError().getErrorCode());
 
-        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(0L), Mockito.any(OciTask.class));
+        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(0L), Mockito.any(OciTaskServRequest.class));
     }
 
     @Test
     public void testCreateTaskException() {
-        Mockito.when(taskServiceMock.saveTask(Mockito.eq(0L), Mockito.any(OciTask.class))).thenThrow(new IllegalArgumentException("Invalid Argument"));
+        Mockito.when(taskServiceMock.saveTask(Mockito.eq(0L), Mockito.any(OciTaskServRequest.class))).thenThrow(new IllegalArgumentException("Invalid Argument"));
 
-        ResponseEntity<OciTaskServResponse> result = ociTaskApi.createTask(new OciTask());
+        ResponseEntity<OciTaskServResponse> result = ociTaskApi.createTask(new OciTaskServRequest());
 
         Assertions.assertNotNull(result.getBody().getError());
         Assertions.assertEquals(OciErrorCode.INTERNAL_ERROR, result.getBody().getError().getErrorCode());
 
-        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(0L), Mockito.any(OciTask.class));
+        Mockito.verify(taskServiceMock, Mockito.atLeastOnce()).saveTask(Mockito.eq(0L), Mockito.any(OciTaskServRequest.class));
     }
 
 }
