@@ -23,4 +23,6 @@
 hs_err_pidi*
 
 # Project files
-.idea
+.idea/
+logs/
+target/
