@@ -29,6 +29,10 @@ public class OciTaskApi {
     @Autowired
     OciTaskService taskService;
 
+    /**
+     * @brief Get all Tasks persisted in OCI Task System.
+     * @return Details of Tasks persisted in OCI Task System if succeeded, instance of {@link OciError} otherwise.
+     */
     @GetMapping(value = "/tasks", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OciTaskServResponse> getTasks() {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -48,6 +52,11 @@ public class OciTaskApi {
         return new ResponseEntity<OciTaskServResponse>(resp, httpStatus);
     }
 
+    /**
+     * @brief Get a Task from OCI Task System.
+     * @param id Valid identifier of Task to be loaded.
+     * @return Details of Task found in the OCI Task System if succeeded, instance of {@link OciError} otherwise.
+     */
     @GetMapping(value = "/tasks/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OciTaskServResponse> getTask(@PathVariable long id) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -67,6 +76,11 @@ public class OciTaskApi {
         return new ResponseEntity<OciTaskServResponse>(resp, httpStatus);
     }
 
+    /**
+     * @brief Create new Task in OCI Task System.
+     * @param ociTaskReq Details of Task {@link OciTask} to be created or updated.
+     * @return Identifier of the Task if succeeded, instance of {@link OciError} otherwise.
+     */
     @PostMapping(value = "/tasks", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OciTaskServResponse> createTask(@RequestBody OciTaskServRequest ociTaskReq) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -86,6 +100,12 @@ public class OciTaskApi {
         return new ResponseEntity<OciTaskServResponse>(resp, httpStatus);
     }
 
+    /**
+     * @brief Update existing Task in OCI Task System.
+     * @param id Identifier of Task record in OCI Task System.
+     * @param ociTaskReq Details of Task {@link OciTask} to be created or updated.
+     * @return Identifier of the Task if succeeded, instance of {@link OciError} otherwise.
+     */
     @PutMapping(value = "/tasks/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OciTaskServResponse> updateTask(@PathVariable long id, @RequestBody OciTaskServRequest ociTaskReq) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -105,6 +125,11 @@ public class OciTaskApi {
         return new ResponseEntity<OciTaskServResponse>(resp, httpStatus);
     }
 
+    /**
+     * @brief Delete a Task from OCI Task System.
+     * @param id Valid identifier of Task to be deleted.
+     * @return Nothing if succeeded, instance of {@link OciError} otherwise.
+     */
     @DeleteMapping(value = "/tasks/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OciTaskServResponse> deleteTask(@PathVariable long id) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
