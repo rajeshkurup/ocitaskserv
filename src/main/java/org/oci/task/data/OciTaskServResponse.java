@@ -11,11 +11,21 @@ import java.util.List;
  */
 public class OciTaskServResponse {
 
+    private Long taskId;
+
     private OciTask task;
 
     private List<OciTask> tasks;
 
     private OciError error;
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
+    }
 
     public OciTask getTask() {
         return task;

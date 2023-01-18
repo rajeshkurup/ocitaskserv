@@ -3,11 +3,16 @@ package org.oci.task.service;
 import org.oci.task.data.dao.OciTaskDao;
 import org.oci.task.data.model.OciTask;
 import org.oci.task.data.OciTaskServResponse;
+import org.oci.task.error.OciError;
+import org.oci.task.error.OciErrorCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @brief Implementation of OCI Task Service APIs.
@@ -16,36 +21,83 @@ import java.util.List;
 @Service
 public class OciTaskServiceImpl implements OciTaskService {
 
+    public static Logger logger = LoggerFactory.getLogger(OciTaskServiceImpl.class);
+
     @Autowired
     OciTaskDao taskDao;
 
     @Override
-    public OciTaskServResponse createTask(OciTask task) {
-        return null;
+    public OciTaskServResponse saveTask(long taskId, OciTask task) {
+        logger.info("Create or Update Task");
+        OciTaskServResponse resp = new OciTaskServResponse();
+        if(task != null) {
+            if(taskId != 0) {
+                task.setId(taskId);
+                logger.info("Update Task - Id=" + taskId);
+            }
+
+            try {
+                OciTask result = taskDao.save(task);
+                resp.setTaskId(result.getId());
+                logger.info("New Task has been created or updated - Id=" + result.getId());
+            }
+            catch(IllegalArgumentException ex) {
+                logger.error("One or more Task details is incorrect - Exception=" + ex.toString());
+                resp.setError(new OciError(OciErrorCode.INVALID_ARGUMENT, "One or more Task details is incorrect"));
+            }
+        }
+        else {
+            logger.error("Invalid Task");
+            resp.setError(new OciError(OciErrorCode.INVALID_ARGUMENT, "Invalid Task"));
+        }
+
+        return resp;
     }
 
     @Override
-    public OciTaskServResponse updateTask(OciTask task) {
-        return null;
-    }
+    public OciTaskServResponse deleteTask(long taskId) {
+        logger.info("Delete a Task - Id=" + taskId);
+        OciTaskServResponse resp = new OciTaskServResponse();
 
-    @Override
-    public OciTaskServResponse delete(long taskId) {
-        return null;
+        try {
+            taskDao.deleteById(taskId);
+            logger.info("Task has been deleted - Id=" + taskId);
+        }
+        catch(IllegalArgumentException ex) {
+            logger.error("Incorrect identifier - Exception=" + ex.toString());
+            resp.setError(new OciError(OciErrorCode.INVALID_ARGUMENT, "Incorrect identifier"));
+        }
+
+        return resp;
     }
 
     @Override
     public OciTaskServResponse getTask(long taskId) {
-        return null;
+        logger.info("Get a Task - Id=" + taskId);
+        OciTaskServResponse resp = new OciTaskServResponse();
+
+        try {
+            Optional<OciTask> task = taskDao.findById(taskId);
+            if(!task.isEmpty()) {
+                resp.setTask(task.get());
+                logger.info("Task found - Id=" + task.get().getId() + " - Title=" + task.get().getTitle());
+            }
+            else {
+                logger.info("Task NOT found - Id=" + taskId);
+            }
+
+        }
+        catch(IllegalArgumentException ex) {
+            logger.error("Incorrect identifier - Exception=" + ex.toString());
+            resp.setError(new OciError(OciErrorCode.INVALID_ARGUMENT, "Incorrect identifier"));
+        }
+
+        return resp;
     }
 
     @Override
     public OciTaskServResponse getTasks() {
-        List<OciTask> tasks = (List<OciTask>)taskDao.findAll();
-        OciTask task = new OciTask();
-        task.setId(1234L);
-        task.setTitle("Hello World! I'm a Task from OCI Task System!! This is a test version!!!");
-        tasks.add(task);
+        List<OciTask> tasks = taskDao.findAll();
         OciTaskServResponse resp = new OciTaskServResponse();
         resp.setTasks(tasks);
         return resp;

@@ -8,7 +8,8 @@ public enum OciErrorCode {
 
     INTERNAL_ERROR(1001),
     DATABASE_ERROR(1002),
-    INVALID_ARGUMENT(2001);
+    INVALID_ARGUMENT(2001),
+    NO_DATA_FOUND(4001);
 
     private final int errorCode;
 

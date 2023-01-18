@@ -13,25 +13,19 @@ import org.springframework.stereotype.Component;
 public interface OciTaskService {
 
     /**
-     * @brief Create new Task in OCI Task System.
-     * @param task Details of Task {@link OciTask} to be created.
+     * @brief Create new Task or update existing Task in OCI Task System.
+     * @param taskId Identifier of Task record in OCI Task System. Must be valid to update existing Task.
+     * @param task Details of Task {@link OciTask} to be created or updated. Id must not be present in order to create new Task.
      * @return Identifier of new Task if succeeded, instance of {@link OciError} otherwise.
      */
-    OciTaskServResponse createTask(OciTask task);
-
-    /**
-     * @brief Update an existing Task in OCI Task System.
-     * @param task Details of Task {@link OciTask} to be updated. Valid identifier of the Task must be present.
-     * @return Nothing if succeeded, instance of {@link OciError} otherwise.
-     */
-    OciTaskServResponse updateTask(OciTask task);
+    OciTaskServResponse saveTask(long taskId, OciTask task);
 
     /**
      * @brief Delete a Task from OCI Task System.
      * @param taskId Valid identifier of Task to be deleted.
      * @return Nothing if succeeded, instance of {@link OciError} otherwise.
      */
-    OciTaskServResponse delete(long taskId);
+    OciTaskServResponse deleteTask(long taskId);
 
     /**
      * @brief Get a Task from OCI Task System.

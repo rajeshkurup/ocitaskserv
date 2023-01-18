@@ -1,9 +1,8 @@
 package org.oci.task.data.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
@@ -12,23 +11,40 @@ import java.util.Date;
  * @author rajeshkurup@live.com
  */
 @Entity
+@Table(name = OciTask.TABLE_NAME)
 public class OciTask {
+
+    public static final String TABLE_NAME= "OCI_TASK";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
+    @Column(name = "PRIORITY", columnDefinition = "TINYINT")
+    private int priority;
+
+    @Column(name = "TITLE", columnDefinition = "VARCHAR(1024) NOT NULL")
     private String title;
 
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "COMPLETED", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean completed;
 
-    private Date createdOn;
+    @Column(name = "START_DATE", columnDefinition = "TIMESTAMP")
+    private Date startDate;
 
-    private Date updatedOn;
+    @Column(name = "DUE_DATE", columnDefinition = "TIMESTAMP")
+    private Date dueDate;
 
-    private Date dueOn;
+    @UpdateTimestamp
+    @Column(name = "TIME_UPDATED", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private Date timeUpdated;
+
+    @CreationTimestamp
+    @Column(name = "TIME_CREATED", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
+    private Date timeCreated;
 
     public OciTask() {
         // Empty
@@ -40,6 +56,14 @@ public class OciTask {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     public String getTitle() {
@@ -58,7 +82,7 @@ public class OciTask {
         this.description = description;
     }
 
-    public boolean isCompleted() {
+    public Boolean isCompleted() {
         return completed;
     }
 
@@ -66,28 +90,36 @@ public class OciTask {
         this.completed = completed;
     }
 
-    public Date getCreatedOn() {
-        return createdOn;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getUpdatedOn() {
-        return updatedOn;
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
-    public Date getDueOn() {
-        return dueOn;
+    public Date getTimeUpdated() {
+        return timeUpdated;
     }
 
-    public void setDueOn(Date dueOn) {
-        this.dueOn = dueOn;
+    public void setTimeUpdated(Date timeUpdated) {
+        this.timeUpdated = timeUpdated;
+    }
+
+    public Date getTimeCreated() {
+        return timeCreated;
+    }
+
+    public void setTimeCreated(Date timeCreated) {
+        this.timeCreated = timeCreated;
     }
 
 }
