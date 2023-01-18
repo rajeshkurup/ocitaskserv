@@ -84,8 +84,8 @@ public class OciTaskServiceImpl implements OciTaskService {
             }
             else {
                 logger.info("Task NOT found - Id=" + taskId);
+                resp.setError(new OciError(OciErrorCode.NO_DATA_FOUND, "Task NOT found - Id=" + taskId));
             }
-
         }
         catch(IllegalArgumentException ex) {
             logger.error("Incorrect identifier - Exception=" + ex.toString());

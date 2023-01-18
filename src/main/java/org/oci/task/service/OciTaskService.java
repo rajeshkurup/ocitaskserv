@@ -16,7 +16,7 @@ public interface OciTaskService {
      * @brief Create new Task or update existing Task in OCI Task System.
      * @param taskId Identifier of Task record in OCI Task System. Must be valid to update existing Task.
      * @param task Details of Task {@link OciTask} to be created or updated. Id must not be present in order to create new Task.
-     * @return Identifier of new Task if succeeded, instance of {@link OciError} otherwise.
+     * @return Identifier of the Task if succeeded, instance of {@link OciError} otherwise.
      */
     OciTaskServResponse saveTask(long taskId, OciTask task);
 
