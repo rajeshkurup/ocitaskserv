@@ -9,6 +9,7 @@ import org.oci.task.error.OciErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public class OciTaskServiceImpl implements OciTaskService {
             taskDao.deleteById(taskId);
             logger.info("Task has been deleted - Id=" + taskId);
         }
-        catch(IllegalArgumentException ex) {
+        catch(IllegalArgumentException | EmptyResultDataAccessException ex) {
             logger.error("Incorrect identifier - Exception=" + ex.toString());
             resp.setError(new OciError(OciErrorCode.INVALID_ARGUMENT, "Incorrect identifier"));
         }
