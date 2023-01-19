@@ -88,7 +88,7 @@ public class OciTaskApi {
 
         try {
             resp = taskService.saveTask(0L, ociTaskReq);
-            httpStatus = getHttpStatus(resp.getError());
+            httpStatus = getHttpStatus(resp.getError(), true);
         }
         catch(Exception ex) {
             logger.error("Exception=" + ex.toString() + " - Stacktrace=" + Arrays.asList(ex.getStackTrace()).toString());
@@ -150,7 +150,11 @@ public class OciTaskApi {
     }
 
     private static HttpStatus getHttpStatus(OciError ociError) {
-        HttpStatus httpStatus = HttpStatus.OK;
+        return getHttpStatus(ociError, false);
+    }
+
+    private static HttpStatus getHttpStatus(OciError ociError, boolean isCreated) {
+        HttpStatus httpStatus = isCreated ? HttpStatus.CREATED : HttpStatus.OK;
 
         if(ociError != null) {
             switch(ociError.getErrorCode()) {
