@@ -22,9 +22,10 @@ import java.util.Arrays;
  */
 @RestController
 @RequestMapping("/v1/ocitaskserv")
+@CrossOrigin(origins = "*")
 public class OciTaskApi {
 
-    public static Logger logger = LoggerFactory.getLogger(OciTaskApi.class);
+    private static Logger logger = LoggerFactory.getLogger(OciTaskApi.class);
 
     @Autowired
     OciTaskService taskService;

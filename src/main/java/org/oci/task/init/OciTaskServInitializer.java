@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OciTaskServInitializer implements ApplicationListener<ApplicationReadyEvent> {
 
-    public static Logger logger = LoggerFactory.getLogger(OciTaskServInitializer.class);
+    private static Logger logger = LoggerFactory.getLogger(OciTaskServInitializer.class);
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {

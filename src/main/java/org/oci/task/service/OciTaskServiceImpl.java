@@ -22,7 +22,7 @@ import java.util.Optional;
 @Service
 public class OciTaskServiceImpl implements OciTaskService {
 
-    public static Logger logger = LoggerFactory.getLogger(OciTaskServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(OciTaskServiceImpl.class);
 
     @Autowired
     OciTaskDao taskDao;
@@ -110,6 +110,7 @@ public class OciTaskServiceImpl implements OciTaskService {
 
     @Override
     public OciTaskServResponse getTasks() {
+        logger.info("Get all Tasks");
         List<OciTask> tasks = taskDao.findAll();
         OciTaskServResponse resp = new OciTaskServResponse();
         resp.setTasks(tasks);
