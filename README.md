@@ -20,7 +20,7 @@ OCI Task Service REST APIs to persist and manage OCI Tasks.
 7. Configure Git Repository.
 8. Create Build Job.
 9. Add Steps like Maven Build, Maven Verify and Maven Publish Reports.
-10. Add Steps like Docker Login, Docker Build Image and Docker Push Image.
+10. Add Steps like Docker Login, Docker Build Image and Docker Push Image. Use Docker Image name like `sjc.ocir.io/<Namespace of the OCI Container Registry>/ocitaskserv:latest`.
 
 ## Deploy Project Using OCI
 
