@@ -9,6 +9,18 @@ OCI Task Service REST APIs to persist and manage OCI Tasks.
 3. Copy `application-test.properties` as `application-prod.properties` in `src/main/resources` folder.
 4. Provide MySQL Connection String and Credentials in `application-prod.properties` file.
 
+## Prerequisites
+
+1. Log on to [OCI Cloud](https://cloud.oracle.com).
+2. Create a Compartment `ocitask-compartment` for OCI Task System.
+3. Create Container Registry for `ocitaskserv` (select `ocitask-compartment` Compartment).
+4. Create VCN and Subnet (select `ocitask-compartment` Compartment).
+5. Add following Ingress Rules in default Security List of the VCN Subnet.
+6. Rule for `ocitaskserv`: Allow TCP Traffic for IP range `0.0.0.0/0` for destination port `8081` (all Source Ports).
+7. Rule for `SonarQube`: Allow TCP Traffic for IP range `0.0.0.0/0` for destination port `9000` (all Source Ports).
+8. Rule for `MySQL`: Allow TCP Traffic for IP range `0.0.0.0/0` for destination port `3306` (all Source Ports).
+9. Rule for `ocitasknodeweb`: Allow TCP Traffic for IP range `0.0.0.0/0` for destination port `3000` (all Source Ports).
+
 ## Build Project Using OCI
 
 1. Logon to [OCI Cloud](https://cloud.oracle.com).
@@ -25,12 +37,13 @@ OCI Task Service REST APIs to persist and manage OCI Tasks.
 ## Deploy Project Using OCI
 
 1. Logon to [OCI Cloud](https://cloud.oracle.com).
-2. [Deploy MySQL into OCI Kubernetes Cluster](https://dev.mysql.com/doc/mysql-operator/en/mysql-operator-innodbcluster-simple-kubectl.html).
-3. Copy and Save Public IP of the MySQL Kubernetes Cluster.
-4. [Deploy SonarQube into OCI Kubernetes Cluster](https://docs.sonarqube.org/9.6/setup-and-upgrade/deploy-on-kubernetes/deploy-sonarqube-on-kubernetes/).
-5. Copy and Save Public IP of the SonarQube Kubernetes Cluster.
-6. Deploy `sjc.ocir.io/<Namespace of the OCI Container Registry>/ocitaskserv:latest` Docker Image into [Oracle Managed Kubernetes Cluster](https://docs.oracle.com/en/solutions/monitor-applications-on-kubernetes/deploy-application-oracle-managed-kubernetes-cluster.html#GUID-B2D9C6EC-DCDF-4BB7-B9C1-3493DA03A3FF).
-7. Copy and Save Public IP of the Kubernetes Cluster.
+2. Use Compartment, VCN and Subnet created in Prerequisites section above.
+3. [Deploy MySQL into OCI Kubernetes Cluster](https://dev.mysql.com/doc/mysql-operator/en/mysql-operator-innodbcluster-simple-kubectl.html).
+4. Copy and Save Public IP of the MySQL Kubernetes Cluster.
+5. [Deploy SonarQube into OCI Kubernetes Cluster](https://docs.sonarqube.org/9.6/setup-and-upgrade/deploy-on-kubernetes/deploy-sonarqube-on-kubernetes/).
+6. Copy and Save Public IP of the SonarQube Kubernetes Cluster.
+7. Deploy `sjc.ocir.io/<Namespace of the OCI Container Registry>/ocitaskserv:latest` Docker Image into [Oracle Managed Kubernetes Cluster](https://docs.oracle.com/en/solutions/monitor-applications-on-kubernetes/deploy-application-oracle-managed-kubernetes-cluster.html#GUID-B2D9C6EC-DCDF-4BB7-B9C1-3493DA03A3FF).
+8. Copy and Save Public IP of the Kubernetes Cluster.
 
 ## Build Project Manually
 
@@ -73,16 +86,6 @@ Run `docker login registry-1.docker.io` from root folder. Provide DockerHub User
 Run `docker push sjc.ocir.io/<Namespace of the OCI Container Registry>/ocitaskserv:latest` from root folder.
 
 ## Deploy Project Manually
-
-1. Log on to [OCI Cloud](https://cloud.oracle.com). 
-2. Create a Compartment `ocitask-compartment` for OCI Task System.
-3. Create Container Registry for `ocitaskserv` (select `ocitask-compartment` Compartment).
-4. Create VCN and Subnet (select `ocitask-compartment` Compartment).
-5. Add following Ingress Rules in default Security List of the VCN Subnet.
-6. Rule for `ocitaskserv`: Allow TCP Traffic for IP range `0.0.0.0/0` for destination port `8081` (all Source Ports).
-7. Rule for `SonarQube`: Allow TCP Traffic for IP range `0.0.0.0/0` for destination port `9000` (all Source Ports).
-8. Rule for `MySQL`: Allow TCP Traffic for IP range `0.0.0.0/0` for destination port `3306` (all Source Ports).
-9. Rule for `ocitasknodeweb`: Allow TCP Traffic for IP range `0.0.0.0/0` for destination port `3000` (all Source Ports).
 
 ### Create a VM Instance for MySQL
 
