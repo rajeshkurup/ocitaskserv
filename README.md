@@ -144,8 +144,8 @@ Run `docker rm ocitaskserv_latest` on Host where Docker Image is loaded.
 
 ## Access OCI Task REST APIs
 
-Use swagger for API Documentation: `http://<Host Name or IP where ocitaskserv_latest Docker Container in Running>:8081/swagger-ui/index.html`
-Use Postman or Curl to access `ocitaskserv_latest` Docker Container.
+- Use swagger for API Documentation: `http://<Host Name or IP where ocitaskserv_latest Docker Container in Running>:8081/swagger-ui/index.html`
+- Use Postman or Curl to access `ocitaskserv_latest` Docker Container.
 
 ### Load All Tasks
 
@@ -153,13 +153,13 @@ GET `http://<Host Name or IP where ocitaskserv_latest Docker Container in Runnin
 
 ### Load a Task
 
-GET `http://<Host Name where ocitaskserv_latest Docker Container in Running>:8081/v1/ocitaskserv/tasks/{id}`
-Path Variable: `id` (Task Identifier as Number)
+- GET `http://<Host Name where ocitaskserv_latest Docker Container in Running>:8081/v1/ocitaskserv/tasks/{id}`
+- Path Variable: `id` (Task Identifier as Number)
 
 ### Create a Task
 
-POST `http://<Host Name where ocitaskserv_latest Docker Container in Running>:8081/v1/ocitaskserv/tasks`
-Sample Post Body:
+- POST `http://<Host Name where ocitaskserv_latest Docker Container in Running>:8081/v1/ocitaskserv/tasks`
+- Sample Post Body:
 ```
 {
     "title": "New Task",
@@ -173,9 +173,9 @@ Sample Post Body:
 
 ### Update a Task
 
-PUT `http://<Host Name where ocitaskserv_latest Docker Container in Running>:8081/v1/ocitaskserv/tasks/{id}`
-Path Variable: `id` (Task Identifier as Number)
-Sample Put Body:
+- PUT `http://<Host Name where ocitaskserv_latest Docker Container in Running>:8081/v1/ocitaskserv/tasks/{id}`
+- Path Variable: `id` (Task Identifier as Number)
+- Sample Put Body:
 ```
 {
     "id": 101,
@@ -190,5 +190,5 @@ Sample Put Body:
 
 ### Delete a Task
 
-DELETE `http://<Host Name where ocitaskserv_latest Docker Container in Running>:8081/v1/ocitaskserv/tasks/{id}`
-Path Variable: `id` (Task Identifier as Number)
+- DELETE `http://<Host Name where ocitaskserv_latest Docker Container in Running>:8081/v1/ocitaskserv/tasks/{id}`
+- Path Variable: `id` (Task Identifier as Number)
