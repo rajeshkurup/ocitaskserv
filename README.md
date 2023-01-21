@@ -79,7 +79,7 @@ Run `docker build . -t sjc.ocir.io/<Namespace of the OCI Container Registry>/oci
 
 #### Login to DockerHub
 
-Run `docker login sjc.ocir.io` from root folder. Provide DockerHub User Id and Password (API Token from DockerHub).
+Run `docker login sjc.ocir.io` from root folder. Provide DockerHub User Id and Password (API Token from `Identity->Domains->Default domain->Users-><UserId>->API keys`).
 
 #### Publish Image into DockerHub
 
